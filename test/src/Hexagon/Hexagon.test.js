@@ -55,8 +55,9 @@ test('Hexagon should work', () => {
         <div>child</div>
       </Hexagon>
     </Layout>,
-  );
-  expect(wrapper.find('.test1').length).toBe(1);
+  );//.debug();
+  //console.log(wrapper);
+  expect(wrapper.find('Hexagon.test1').length).toBe(1);
 
   wrapper.find('.test1').simulate('mouseEnter');
   expect(playDoh).toBe('mouseEnter');
@@ -70,10 +71,10 @@ test('Hexagon should work', () => {
   wrapper.find('.test1').simulate('click');
   expect(playDoh).toBe('click');
 
-  wrapper.find('.test1').simulate('dragStart', { dataTransfer: { setData: () => {} } });
+  wrapper.find('.test1').simulate('dragStart', { dataTransfer: { setData: () => { } } });
   expect(playDoh).toBe('dragStart');
 
-  wrapper.find('.test1').simulate('dragEnd', { dataTransfer: { setData: () => {} } });
+  wrapper.find('.test1').simulate('dragEnd', { dataTransfer: { setData: () => { } } });
   expect(playDoh).toBe('dragEnd');
 
   wrapper.find('.test1').simulate('dragOver');
@@ -97,7 +98,7 @@ test('Hexagon should work', () => {
         q={0}
         r={0}
         s={0}
-        className={'test2'}
+        _className={'test2'}
       >
         <div>child</div>
       </Hexagon>
