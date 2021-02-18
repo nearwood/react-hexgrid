@@ -1,10 +1,10 @@
 {
-  "name": "react-hexgrid",
+  "name": "@nearwood/react-hexgrid",
   "description": "Interactive hexagon grids with React bindings",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "main": "lib/index.js",
-  "author": "Hellenic",
-  "repository": "Hellenic/react-hexgrid",
+  "author": "Nick Earwood <nearwood@gmail.com> (https://nearwood.dev/)",
+  "repository": "nearwood/react-hexgrid",
   "license": "MIT",
   "scripts": {
     "compile": "babel src/ --out-dir lib",
