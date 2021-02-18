@@ -15,7 +15,7 @@ class Hexagon extends Component {
       PropTypes.string,
       PropTypes.object
     ]),
-    _className: PropTypes.string,
+    className: PropTypes.string,
     data: PropTypes.object,
     onMouseEnter: PropTypes.func,
     onMouseOver: PropTypes.func,
@@ -60,7 +60,7 @@ class Hexagon extends Component {
         ...this.state,
         data: this.props.data,
         fill: this.props.fill,
-        _className: this.props._className
+        className: this.props.className
       };
       e.dataTransfer.setData('hexagon', JSON.stringify(targetProps));
       this.props.onDragStart(e, this);
@@ -87,7 +87,7 @@ class Hexagon extends Component {
   }
 
   render() {
-    const { q, r, s, fill, cellStyle, _className } = this.props;
+    const { q, r, s, fill, cellStyle, className } = this.props;
     const { layout, points } = this.context;
     const hex = new Hex(q, r, s);
     const pixel = HexUtils.hexToPixel(hex, layout);
@@ -95,7 +95,7 @@ class Hexagon extends Component {
 
     return (
       <g
-        className={classNames('hexagon-group', _className)}
+        className={classNames('hexagon-group', className)}
         transform={`translate(${pixel.x}, ${pixel.y})`}
         draggable="true"
         onMouseEnter={e => this.onMouseEnter(e)}
