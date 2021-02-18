@@ -3,8 +3,19 @@ import PropTypes from 'prop-types';
 import Orientation from './models/Orientation';
 import Point from './models/Point';
 
+export const LayoutContext = React.createContext({
+  layout: {
+    size: new Point(10, 10),
+    flat: true,
+    spacing: 1.0,
+    origin: new Point(0, 0)
+  },
+  points: 'yes'
+});
+
+
 class Layout extends Component {
-  static LAYOUT_FLAT = new Orientation(3.0 / 2.0, 0.0, Math.sqrt(3.0) / 2.0, Math.sqrt(3.0),2.0 / 3.0, 0.0, -1.0 / 3.0, Math.sqrt(3.0) / 3.0, 0.0);
+  static LAYOUT_FLAT = new Orientation(3.0 / 2.0, 0.0, Math.sqrt(3.0) / 2.0, Math.sqrt(3.0), 2.0 / 3.0, 0.0, -1.0 / 3.0, Math.sqrt(3.0) / 3.0, 0.0);
   static LAYOUT_POINTY = new Orientation(Math.sqrt(3.0), Math.sqrt(3.0) / 2.0, 0.0, 3.0 / 2.0, Math.sqrt(3.0) / 3.0, -1.0 / 3.0, 0.0, 2.0 / 3.0, 0.5);
 
   static propTypes = {
@@ -23,12 +34,7 @@ class Layout extends Component {
     origin: new Point(0, 0)
   }
 
-  static childContextTypes = {
-    layout: PropTypes.object, // TODO Shape
-    points: PropTypes.string
-  };
-
-  getChildContext() {
+  _getChildContext() {
     const { children, flat, className, ...rest } = this.props;
     const orientation = (flat) ? Layout.LAYOUT_FLAT : Layout.LAYOUT_POINTY;
     const cornerCoords = this.calculateCoordinates(orientation);
@@ -65,7 +71,9 @@ class Layout extends Component {
     const { children, className } = this.props;
     return (
       <g className={className}>
-        {children}
+        <LayoutContext.Provider value={this._getChildContext()}>
+          {children}
+        </LayoutContext.Provider>
       </g>
     );
   }

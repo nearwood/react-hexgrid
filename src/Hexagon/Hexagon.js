@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Hex from '../models/Hex';
 import HexUtils from '../HexUtils';
+import { LayoutContext } from '../Layout';
 
 class Hexagon extends Component {
   static propTypes = {
@@ -27,28 +28,12 @@ class Hexagon extends Component {
     children: PropTypes.node
   };
 
-  static contextTypes = {
-    layout: PropTypes.object, // TODO Shape
-    points: PropTypes.string
-  };
+  static contextType = LayoutContext;
 
-  constructor(props, context) {
-    super(props, context);
-    const { q, r, s } = props;
-    const { layout } = context;
-    const hex = new Hex(q, r, s);
-    const pixel = HexUtils.hexToPixel(hex, layout);
-    this.state = { hex, pixel };
+  constructor(props) {
+    super(props);
   }
 
-  // TODO Refactor to reduce duplicate
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    const { q, r, s } = nextProps;
-    const { layout } = this.context;
-    const hex = new Hex(q, r, s);
-    const pixel = HexUtils.hexToPixel(hex, layout);
-    this.setState({ hex, pixel });
-  }
   onMouseEnter(e) {
     if (this.props.onMouseEnter) {
       this.props.onMouseEnter(e, this);
@@ -100,11 +85,14 @@ class Hexagon extends Component {
       this.props.onDrop(e, this, target);
     }
   }
+
   render() {
-    const { fill, cellStyle, className } = this.props;
-    const { points } = this.context;
-    const { hex, pixel } = this.state;
+    const { q, r, s, fill, cellStyle, className } = this.props;
+    const { layout, points } = this.context;
+    const hex = new Hex(q, r, s);
+    const pixel = HexUtils.hexToPixel(hex, layout);
     const fillId = (fill) ? `url(#${fill})` : null;
+
     return (
       <g
         className={classNames('hexagon-group', className)}
